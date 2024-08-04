@@ -1,6 +1,19 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+const movieSchema = new mongoose.Schema({
+  referance_id: {
+    type: Number
+  },
+  rating: {
+    type: Number
+  },
+  is_rated: {
+    type: Number
+  }
+})
+
+
 const userSchema = new mongoose.Schema({
   first_name: {
     type: String,
@@ -28,9 +41,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  rated_movies: [movieSchema]
+
 });
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
