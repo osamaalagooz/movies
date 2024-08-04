@@ -41,7 +41,28 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  rated_movies: [movieSchema]
+  rated_movies: [movieSchema],
+  wish_list : [
+    {
+    referance_id: {
+      type: Number
+  },
+  movie: {
+    type: mongoose.Schema.Types.Mixed,
+  }
+  },
+],
+favourite_list : [
+  {
+  referance_id: {
+    type: Number
+},
+movie: {
+  type: mongoose.Schema.Types.Mixed,
+}
+},
+
+]
 
 });
 
