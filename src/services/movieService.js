@@ -102,11 +102,27 @@ exports.removeMovieFromFavouriteList = async (user, movieID) => {
 exports.removeMovieFromWishList = async (user, movieID) => {
    
     console.log('wish Movies:', user.wish_list);
-    user.wish_list = user.wish_list.filter(item => item.referance_id !== movieID);
+    user.wish_list = await user.wish_list.filter(item => item.referance_id !== movieID);
 
     // Save the updated user document
     await user.save();
 
    return user;
+
+}           
+
+exports.getWishList = async (user) => {
+   
+    console.log('wish Movies:', user.wish_list);
+    
+   return user.wish_list;
+
+}           
+
+exports.getFavouriteList = async (user) => {
+   
+    console.log('wish Movies:', user.favourite_list);
+    
+   return user.favourite_list;
 
 }           
