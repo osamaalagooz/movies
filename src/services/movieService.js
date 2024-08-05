@@ -1,5 +1,5 @@
 const axios = require('axios');
-const User = require('../models/userModel');
+const {User, item} = require('../models/userModel');
 const CustomError = require('../errors/customeError');
 const calculateAge = require("../utils/ageCalculator")
 
@@ -50,11 +50,15 @@ exports.retriveMovie = async (user, movieId) => {
       }
     }
 
-    exports.addMovieToWishList = async (user, movieData) => {
+    exports.addMovieToWishList = async (user, movieData, movieID) => {
    
         console.log('Wished Movies:', user.wish_list);
-        const movie = await user.wish_list.find(movie => movie.referance_id === movieData.id);
-
+        const movie = await user.wish_list.find(movie => movie.referance_id === movieID);
+        data = {
+            referance_id: movieData.id,
+            movie : movieData
+        }
+        console.log('Data of movie:', data)
         if (movie) {
             throw new CustomError("Movie already added to your wish list", 400)
         } else {
@@ -62,16 +66,17 @@ exports.retriveMovie = async (user, movieId) => {
                 referance_id: movieData.id,
                 movie : movieData
             }
+            console.log('Wished Movies:', data)
             user.wish_list.push(data)
         }
-       return user.save();
+        user.save()
+       return user;
 
 }           
 
-exports.addMovieToFavouriteList = async (user, movieData) => {
+exports.addMovieToFavouriteList = async (user, movieData, movieID) => {
    
-    console.log('favourite Movies:', user.favourite_list);
-    const movie = await user.favourite_list.find(movie => movie.referance_id === movieData.id);
+    const movie = await user.favourite_list.find(movie => movie.referance_id === movieID);
 
     if (movie) {
         throw new CustomError("Movie already added to your favourite list", 400)

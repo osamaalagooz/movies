@@ -13,6 +13,14 @@ const movieSchema = new mongoose.Schema({
   }
 })
 
+const itemSchema = new mongoose.Schema({
+  referance_id: {
+    type: Number
+  },
+  movie: {
+    type: mongoose.Schema.Types.Mixed,
+  }
+})
 
 const userSchema = new mongoose.Schema({
   first_name: {
@@ -42,27 +50,8 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   rated_movies: [movieSchema],
-  wish_list : [
-    {
-    referance_id: {
-      type: Number
-  },
-  movie: {
-    type: mongoose.Schema.Types.Mixed,
-  }
-  },
-],
-favourite_list : [
-  {
-  referance_id: {
-    type: Number
-},
-movie: {
-  type: mongoose.Schema.Types.Mixed,
-}
-},
-
-]
+  wish_list: [itemSchema],
+  favourite_list: [itemSchema]
 
 });
 

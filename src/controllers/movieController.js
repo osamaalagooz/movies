@@ -23,7 +23,7 @@ exports.retriveMovie = async (req, res, next) => {
 
   exports.addMovieToWishList = async (req, res, next) => {
     try {
-      const movieData = await movieService.addMovieToWishList(req.user, Number(req.params.id));
+      const movieData = await movieService.addMovieToWishList(req.user,req.body, Number(req.params.id));
       res.status(201).json({ success: true, message: "Movie has been added successfully" });
     } catch (error) {
       error.statusCode=400
@@ -33,7 +33,7 @@ exports.retriveMovie = async (req, res, next) => {
 
   exports.addMovieToFavouriteList = async (req, res, next) => {
     try {
-      const movieData = await movieService.addMovieToFavouriteList(req.user, Number(req.params.id));
+      const movieData = await movieService.addMovieToFavouriteList(req.user,req.body, Number(req.params.id));
       res.status(201).json({ success: true, message: "Movie has been added successfully" });
     } catch (error) {
       error.statusCode=400
