@@ -94,7 +94,7 @@ exports.addMovieToFavouriteList = async (user, movieData, movieID) => {
 exports.removeMovieFromFavouriteList = async (user, movieID) => {
    
     console.log('favourite Movies:', user.favourite_list);
-    user.wish_list = user.wish_list.filter(item => item.referance_id !== movieID);
+    user.favourite_list = user.favourite_list.filter(item => item.referance_id !== movieID);
 
     // Save the updated user document
     await user.save();
