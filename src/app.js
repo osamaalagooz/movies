@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 const movieRoutes = require('./routes/movieRoutes');
 const cors = require('cors');
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(authMiddelware.protect);
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/movies', movieRoutes);
 app.use(errorHandler);
 

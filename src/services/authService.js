@@ -1,6 +1,8 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const CustomError = require('../errors/customeError');
+
 
 exports.register = async (userData) => {
   const user = new User(userData);
@@ -11,12 +13,12 @@ exports.register = async (userData) => {
 exports.login = async ({ email, password }) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error('Invalid credentials');
+    throw new CustomError("Invalid credentials", 401);
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    throw new Error('Invalid credentials');
+    throw new CustomError("Invalid credentials", 401);
   }
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
