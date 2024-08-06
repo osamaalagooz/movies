@@ -3,7 +3,7 @@ const userService = require('../services/userService');
 exports.updateProfile = async (req, res, next) => {
   try {
     const updatedUser = await userService.updateProfile(req.user, req.body);
-    res.status(201).json({ success: true, message:  "User updated successfully"});
+    res.status(201).json({ success: true, user:  req.body});
   } catch (error) {
     error.statusCode=400
     next(error);
