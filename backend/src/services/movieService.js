@@ -5,40 +5,29 @@ const calculateAge = require("../utils/ageCalculator")
 
 exports.rate = async (user, movieData) => {
    
-            console.log('Rated Movies:', user.rated_movies);
-            const movie = await user.rated_movies.find(movie => movie.referance_id === movieData.referance_id);
+        const movie = await user.rated_movies.find(movie => movie.referance_id === movieData.referance_id);
 
-            if (movie) {
-                console.log('Found movie:', movie);
-                movie.rating = movieData.rating;
-                movie.is_rated = true
+        if (movie) {
+            movie.rating = movieData.rating;
+            movie.is_rated = true
 
 
-            } else {
-                movieData["is_rated"] = true
-                movieData["rating"] = movieData.rating;
-                user.rated_movies.push(movieData)
-            }
-           return user.save();
+        } else {
+            movieData["is_rated"] = true
+            movieData["rating"] = movieData.rating;
+            user.rated_movies.push(movieData)
+        }
+        return user.save();
 
 }
 
 exports.retriveMovie = async (user, movieId) => {
-    const userAge = calculateAge(user.date_of_birth)
-    console.log('User Age:', userAge);
-
-    let isAdult = false
-    if (userAge >= 18) {
-        isAdult = true
-    }
     try {
         const response = await axios.get(`${process.env.BASE_URI}movie/${movieId}?api_key=${process.env.API_KEY}`);
         let movieData = response.data
-        // console.log('Rated Movies:', user.rated_movies);
         const movie = await user.rated_movies.find(movie => movie.referance_id === Number(movieId));
 
         if (movie) {
-            console.log('Found movie:', movie);
             movieData["rating"] = movie.rating;
             movieData["is_rated"] = movie.is_rated
         } else {
@@ -50,23 +39,18 @@ exports.retriveMovie = async (user, movieId) => {
       }
     }
 
-    exports.addMovieToWishList = async (user, movieData, movieID) => {
+    exports.addMovieToWishList = async (user, movieID) => {
    
-        console.log('Wished Movies:', user.wish_list);
         const movie = await user.wish_list.find(movie => movie.referance_id === movieID);
-        data = {
-            referance_id: movieData.id,
-            movie : movieData
-        }
-        console.log('Data of movie:', data)
         if (movie) {
             throw new CustomError("Movie already added to your wish list", 400)
         } else {
+            const response = await axios.get(`${process.env.BASE_URI}movie/${movieID}?api_key=${process.env.API_KEY}`);
+            let movieData = response.data
             data = {
                 referance_id: movieData.id,
                 movie : movieData
             }
-            console.log('Wished Movies:', data)
             user.wish_list.push(data)
         }
         user.save()
@@ -74,13 +58,15 @@ exports.retriveMovie = async (user, movieId) => {
 
 }           
 
-exports.addMovieToFavouriteList = async (user, movieData, movieID) => {
+exports.addMovieToFavouriteList = async (user, movieID) => {
    
     const movie = await user.favourite_list.find(movie => movie.referance_id === movieID);
 
     if (movie) {
         throw new CustomError("Movie already added to your favourite list", 400)
     } else {
+        const response = await axios.get(`${process.env.BASE_URI}movie/${movieID}?api_key=${process.env.API_KEY}`);
+        let movieData = response.data
         data = {
             referance_id: movieData.id,
             movie : movieData
@@ -93,9 +79,7 @@ exports.addMovieToFavouriteList = async (user, movieData, movieID) => {
 
 exports.removeMovieFromFavouriteList = async (user, movieID) => {
    
-    console.log('favourite Movies:', user.favourite_list);
     user.favourite_list = user.favourite_list.filter(item => item.referance_id !== movieID);
-
     // Save the updated user document
     await user.save();
 
@@ -106,9 +90,7 @@ exports.removeMovieFromFavouriteList = async (user, movieID) => {
 
 exports.removeMovieFromWishList = async (user, movieID) => {
    
-    console.log('wish Movies:', user.wish_list);
     user.wish_list = await user.wish_list.filter(item => item.referance_id !== movieID);
-
     // Save the updated user document
     await user.save();
 
@@ -117,17 +99,11 @@ exports.removeMovieFromWishList = async (user, movieID) => {
 }           
 
 exports.getWishList = async (user) => {
-   
-    console.log('wish Movies:', user.wish_list);
     
    return user.wish_list;
-
 }           
 
 exports.getFavouriteList = async (user) => {
-   
-    console.log('wish Movies:', user.favourite_list);
-    
+       
    return user.favourite_list;
-
 }           

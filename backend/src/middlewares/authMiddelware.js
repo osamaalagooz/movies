@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
 exports.protect = async (req, res, next) => {
-  const excludedRoutes = ['/api/auth/login', '/api/auth/register'];
+  const excludedRoutes = ['/api/auth/login', '/api/auth/register']; // does not need to be authanticated
   if (excludedRoutes.includes(req.path)) {
     console.log(req.path)
     return next(); // Skip the middleware for excluded routes
