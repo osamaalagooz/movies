@@ -1,8 +1,9 @@
-# Movies: Discover Your Next Favorite Show
+# [MoviesStream](https://66b29dcc38ed5a00970482ce--alagoozmoviess.netlify.app/): Discover Your Next Favorite Show
 
 ## Project Description
 
-MovieHub is a dynamic web application tailored for movie enthusiasts and TV show lovers. Our platform offers a rich browsing experience, enabling users to explore, search, and manage personalized lists of popular and trending movies and TV shows.
+MovieStream is a dynamic web application tailored for movie enthusiasts and TV show lovers. Our platform offers a rich browsing experience, enabling users to explore, search, and manage personalized lists of popular and trending movies and TV shows.
+
 
 ### Key Features
 
@@ -46,7 +47,14 @@ To get the project up and running on your local machine, follow these steps:
    cd frontend
    npm install
 
-2. **Run the development server:**
+2. **Prepare Configs file `.env`:**
+   - **Path:** /frontend/.env
+   - **Content:**
+   
+            VITE_APP_TMDB_TOKEN= <Generate one from TMDB website>           
+            VITE_BASE_URL=http://localhost:{BACKEND_PORT}/
+
+3. **Run the development server:**
    ```bash
    npm run dev
 
@@ -58,7 +66,17 @@ To get the project up and running on your local machine, follow these steps:
    cd backend
    npm install
 
-2. **Run the development server:**
+2. **Prepare Configs file `.env`:**
+   - **path:** /backend/src/.env
+   - **Content:**
+   
+            MONGO_URI= <will be shared via email>
+            JWT_SECRET=mysecretkey
+            PORT=3000 # as you need
+            BASE_URI=https://api.themoviedb.org/3/
+            API_KEY= <Generate one from TMDB website>
+     
+3. **Run the development server:**
    ```bash
    cd src
    npm server.js
