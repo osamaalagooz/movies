@@ -8,7 +8,7 @@ export const getWishList = async () => {
 };
 
 export const addToWishlist = async ({ id, data2 }) => {
-  const res = await axiosServices.post(`${WISHLIST_PATH}${id}/wishlist`, data2);
+  const res = await axiosServices.post(`${WISHLIST_PATH}${id}/wishlist`);
   return res.data;
 };
 

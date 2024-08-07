@@ -9,8 +9,7 @@ export const getFavList = async () => {
 
 export const addToFavlist = async ({ id, data2 }) => {
   const res = await axiosServices.post(
-    `${FAVLIST_PATH}${id}/favouritelist`,
-    data2
+    `${FAVLIST_PATH}${id}/favouritelist`
   );
   return res.data;
 };
