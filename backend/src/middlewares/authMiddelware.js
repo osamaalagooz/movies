@@ -8,7 +8,6 @@ exports.protect = async (req, res, next) => {
     return next(); // Skip the middleware for excluded routes
   }
   const token = req.headers.authorization?.split(' ')[1];
-  console.log(token)
   if (!token) {
     return res.status(401).json({ message: 'Not authorized' });
   }
