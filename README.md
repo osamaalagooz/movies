@@ -38,7 +38,7 @@ To get the project up and running on your local machine, follow these steps:
 
  ### Clone the repository:
 
-   `` git clone https://github.com/yourusername/movie-hub-frontend.git ``
+   `` git clone https://github.com/osamaalagooz/movies.git ``
 
 ### Frontend
 
